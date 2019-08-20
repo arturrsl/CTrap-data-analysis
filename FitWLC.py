@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
+# Artur Kaczmarczyk, August 2019
 
 # In[1]:
 
