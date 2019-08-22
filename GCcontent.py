@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[67]:
+# Artur Kaczmarczyk
+# August 2019
+
+# In[1]:
 
 
 import numpy as np
@@ -18,7 +21,7 @@ from snapgene_reader import snapgene_file_to_dict, snapgene_file_to_seqrecord
 
 # ## Load the SnapGene sequence and plot GC content 
 
-# In[ ]:
+# In[2]:
 
 
 filepath = '/Users/Artur/Desktop/lambda.dna'
@@ -26,27 +29,41 @@ dictionary = snapgene_file_to_dict(filepath)
 seqrecord = snapgene_file_to_seqrecord(filepath)
 
 
-# In[42]:
+# In[19]:
 
 
-DNAseq = seqrecord[:] 
-print("This sequence contains " + str(len(DNAseq.seq)) + ' base pairs')
-print(DNAseq.seq)
+DNA = seqrecord[:] 
+print("This sequence contains " + str(len(DNA.seq)) + ' base pairs')
+print(DNA.seq)
 
 
-# In[84]:
+# In[28]:
 
 
-binsize = 600
+binsize = 1000
 GCcontent = []
 
-GC(str(DNAseq.seq[0:5]))
+#GC(str(DNAseq.seq[0:5]))
    
-for i in range(0,int(len(DNAseq.seq)/binsize)):
+for i in range(0,int(len(DNAseq.seq)-250)):
     #a = GC(str(DNAseq.seq[(i*binsize):((i+1)*binsize)]))
-    GCcontent = np.append(GCcontent,[GC(str(DNAseq[(i*binsize):((i+1)*binsize)]))])
+    if i>(len(DNAseq.seq)-binsize):
+        GCcontent = np.append(GCcontent,[GC(str(DNA.seq[i:]))])
+    else:
+        GCcontent = np.append(GCcontent,[GC(str(DNA.seq[i:(i+binsize)]))])
 
-plt.plot(GCcontent, 'g'); 
+        
+ATcontent = (100-GCcontent)*0.01
+
+fig, ax = plt.subplots(figsize=(20,5))
+
+ax.tick_params(direction='out', length=6, width=2, labelsize= 15,
+               grid_color='r', grid_alpha=0.5)
+ax.plot(ATcontent, linewidth=2.0,color='g')
+ax.set_xlabel("position (bp)", fontsize=15)
+ax.set_ylabel("frequency", fontsize=15)
+np.savetxt('AT_content_binsize_' + (str(binsize)) + 'nt.csv', ATcontent, delimiter=",")
+plt.savefig('ATcontent.png', dpi=300, bbox_inches='tight')
 
 
 # In[ ]:
