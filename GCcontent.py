@@ -27,7 +27,7 @@ from snapgene_reader import snapgene_file_to_dict, snapgene_file_to_seqrecord
 
 #filepath = '/Users/Artur/Desktop/lambda.dna'     # if Snap Gene file is going to be loaded
 #dictionary = snapgene_file_to_dict(filepath)
-#seqrecord = snapgene_file_to_seqrecord(filepath)
+#seq_record = snapgene_file_to_seqrecord(filepath)
 
 
 # loading from the genbank database
@@ -42,7 +42,7 @@ with Entrez.efetch(db="nucleotide", rettype="gb", retmode="text", id="J02459.1")
 # In[19]:
 
 
-DNA = seqrecord[:] 
+DNA = seq_record[:] 
 print("This sequence contains " + str(len(DNA.seq)) + ' base pairs')
 print(DNA.seq)
 
