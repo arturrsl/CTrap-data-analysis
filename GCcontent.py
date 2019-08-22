@@ -13,7 +13,8 @@ import matplotlib.pyplot as plt
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
-
+from Bio import Entrez
+from Bio import SeqIO
 
 from Bio.SeqUtils import GC
 from snapgene_reader import snapgene_file_to_dict, snapgene_file_to_seqrecord
@@ -24,9 +25,18 @@ from snapgene_reader import snapgene_file_to_dict, snapgene_file_to_seqrecord
 # In[2]:
 
 
-filepath = '/Users/Artur/Desktop/lambda.dna'
-dictionary = snapgene_file_to_dict(filepath)
-seqrecord = snapgene_file_to_seqrecord(filepath)
+#filepath = '/Users/Artur/Desktop/lambda.dna'     # if Snap Gene file is going to be loaded
+#dictionary = snapgene_file_to_dict(filepath)
+#seqrecord = snapgene_file_to_seqrecord(filepath)
+
+
+# loading from the genbank database
+#Entrez.email = "A.N.Other@example.com"
+with Entrez.efetch(db="nucleotide", rettype="gb", retmode="text", id="J02459.1") as handle:
+    seq_record = SeqIO.read(handle, "gb") #using "gb" as an alias for "genbank"
+#print("%s with %i features" % (seq_record.id, len(seq_record.features)))
+#print(seq_record)
+
 
 
 # In[19]:
